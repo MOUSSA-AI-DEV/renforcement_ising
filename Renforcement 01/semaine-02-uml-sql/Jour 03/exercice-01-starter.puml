@@ -1,0 +1,23 @@
+@startuml agence-immobiliere
+
+' Completez ce diagramme
+
+abstract class BienImmobilier {
+    - id: int
+    - superficie: float
+    - adresse: string
+    - prix: decimal
+    - statut: string
+    ' Ajoutez les attributs manquants et methodes
+}
+
+class Appartement {
+    ' ...
+}
+
+' Ajoutez les autres classes
+
+BienImmobilier <|-- Appartement
+' Completez les heritages et associations
+
+@enduml

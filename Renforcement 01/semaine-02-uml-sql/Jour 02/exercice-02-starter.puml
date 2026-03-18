@@ -1,0 +1,15 @@
+@startuml systeme-hospitalier
+
+left to right direction
+skinparam packageStyle rectangle
+
+' Definissez vos acteurs ici
+actor "Patient" as PAT
+' ...
+
+rectangle "Systeme de Gestion Hospitaliere" {
+    ' Definissez vos cas d'utilisation ici
+    ' ...
+}
+
+@enduml

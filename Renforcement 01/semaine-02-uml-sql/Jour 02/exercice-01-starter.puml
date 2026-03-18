@@ -1,0 +1,23 @@
+@startuml plateforme-reservation
+
+' Completez ce diagramme selon les specifications
+
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Visiteur" as V
+actor "Membre" as M
+actor "Administrateur" as A
+' Ajoutez les acteurs manquants
+
+rectangle "Plateforme de Reservation" {
+    ' Cas d'utilisation public
+    usecase "Consulter les seances" as UC_CONSULT
+    ' Completez avec les autres cas d'utilisation...
+
+    ' Relations
+    V --> UC_CONSULT
+    ' Completez avec les relations...
+}
+
+@enduml

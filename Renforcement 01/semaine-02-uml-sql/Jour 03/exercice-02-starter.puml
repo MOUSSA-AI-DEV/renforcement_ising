@@ -1,0 +1,27 @@
+@startuml plateforme-lms
+
+' Completez ce diagramme
+
+abstract class Utilisateur {
+    - id: int
+    - nom: string
+    - email: string
+    - motDePasse: string
+    ' ...
+}
+
+class Instructeur {
+    ' ...
+}
+
+class Apprenant {
+    ' ...
+}
+
+' Ajoutez les autres classes
+' Ajoutez les relations
+
+Utilisateur <|-- Instructeur
+Utilisateur <|-- Apprenant
+
+@enduml

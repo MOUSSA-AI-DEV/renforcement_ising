@@ -1,0 +1,15 @@
+@startuml application-covoiturage
+
+left to right direction
+
+' Acteurs
+actor "Passager" as PAS
+actor "Conducteur" as CON
+' ...
+
+rectangle "Application Covoiturage" {
+    ' Cas d'utilisation
+    ' ...
+}
+
+@enduml
