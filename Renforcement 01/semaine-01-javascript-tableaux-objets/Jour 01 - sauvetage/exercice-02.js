@@ -35,19 +35,31 @@ const produits = [
 ];
 
 function produitsEnRuptureOuCritique(produits) {
-  // TODO
+  return produits.filter((el)=>{ return el.stock <= 5 }).sort((a,b)=>a.stock-b.stock);
 }
 
 function valeurTotaleParCategorie(produits) {
-  // TODO
+  var uniquecat=[...new set(produits.map(p=>p.categorie))]
+  return uniquecat.map((el)=>produits.reduce((acc ,el1 )=>{if(el1.categorie===el.categorie){
+    acc+=el1.stock
+  }},0),
+ { categorie:acc }
+)
 }
 
 function produitLePlusCherParCategorie(produits) {
-  // TODO
-}
+
+  var uniquecat = [...new set(produits.map(p => p.categorie))]
+
+
+  return ({ categorie: uniquecat.map((el) =>  Math.max([...(produits.filter(el2 => el2.categorie === el.categorie).map(el3 => el3.prix))])) } ) };
+  
+
 
 function appliquerRemise(produits, categorie, pourcentage) {
-  // TODO
+
+  return [...produits.filter((el) => el.categorie === categorie)].map((el1) => (el1.prix - el1.prix*pourcentage / 100).toFixed(2))
+
 }
 
 // Tests

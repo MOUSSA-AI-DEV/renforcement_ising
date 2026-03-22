@@ -38,26 +38,36 @@ const commandes = [
 ];
 
 // --- Vos implementations ---
-
+var statut = 'livree';
 function filtrerParStatut(commandes, statut) {
-  // TODO
+ return commandes.filter((commande)=>commande.statut===statut);
 }
 
 function calculerChiffreAffaires(commandes) {
-  // TODO
+ return commandes.reduce((total, commande) => total + commande.montant, 0);
 }
 
 function commandeLaPlusElevee(commandes) {
-  // TODO
+  return commandes.filter((commande)=>commande.montant===Math.max(...commandes.map(c=>c.montant))) ;
+
 }
 
 function marquerPrioritaires(commandes) {
-  // TODO
+  return   commandes.map( commande =>( {
+    ...commande,
+    prioritaire: commande.montant > 800 && commande.statut === 'en_attente'
+  })
+  )
+  
 }
 
 function resumeParStatut(commandes) {
-  // TODO
-}
+
+
+  return commandes.reduce((acc, commande) => {
+    if (!acc[commande.statut]) {
+      acc[commande.statut] = { count: 0, total: 0 };
+    }
 
 // --- Tests ---
 console.log('--- filtrerParStatut ---');
