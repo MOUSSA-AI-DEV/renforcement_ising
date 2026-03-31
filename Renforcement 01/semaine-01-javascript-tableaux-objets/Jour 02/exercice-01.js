@@ -47,15 +47,70 @@ const transactions = [
 ];
 
 function rapportMensuel(transactions) {
-  // TODO
-}
+  const result = {};
 
+  transactions.forEach(t => {
+    const mois = t.date.slice(0, 7); 
+
+    if (!result[mois]) {
+      result[mois] = {
+        mois,
+        nombreTransactions: 0,
+        totalHT: 0,
+        transactionMax: 0 
+      };
+    }
+
+    result[mois].nombreTransactions += 1;
+    result[mois].totalHT += t.montant;
+    result[mois].transactionMax = Math.max(result[mois].transactionMax, t.montant);
+  });
+
+  const final = Object.values(result).map(m => {
+    const totalTVA = m.totalHT * 0.20;
+    const totalTTC = m.totalHT + totalTVA;
+
+    return {
+      ...m,
+      totalTVA,
+      totalTTC
+    };
+  });
+
+  return final.sort((a, b) => a.mois.localeCompare(b.mois));
+}
 function top3Clients(transactions) {
-  // TODO
+  const clientsMap = {};
+  transactions.forEach(t => {
+    if (!clientsMap[t.clientId]) {
+      clientsMap[t.clientId] = {
+        clientId: t.clientId,
+        nom: t.nom,
+        total: 0,
+        nombreAchats: 0
+      };
+    }
+
+    clientsMap[t.clientId].total += t.montant;
+    clientsMap[t.clientId].nombreAchats += 1;
+  });
+  const clientsArray = Object.values(clientsMap);
+  return clientsArray
+    .sort((a, b) => b.total - a.total)
+    .slice(0, 3);
 }
 
 function evolutionMensuelle(transactions) {
-  // TODO
+  const rapport = rapportMensuel(transactions);
+  const result = rapport.map((m, index) => {
+    if (index === 0) {
+      return { mois: m.mois, totalHT: m.totalHT, evolution: null };
+    }
+    const evolution = ((m.totalHT - rapport[index - 1].totalHT) / rapport[index - 1].totalHT * 100);
+    return { mois: m.mois, totalHT: m.totalHT, evolution: Math.round(evolution * 10) / 10 };
+  });
+  return result;
+
 }
 
 function detecterAnomalies(transactions) {
