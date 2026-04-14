@@ -45,19 +45,76 @@ const employes = [
 ];
 
 function rechercherEmployes(employes, criteres) {
-  // TODO
+  return employes.filter(e => {
+    if (criteres.departement && e.departement !== criteres.departement) {
+      return false;
+    }
+    if (criteres.poste && e.poste !== criteres.poste) {
+      return false;
+    }
+    if (criteres.salaireMin && e.salaire < criteres.salaireMin) {
+      return false;
+    }
+    if (criteres.salaireMax && e.salaire > criteres.salaireMax) {
+      return false;
+    }
+    if (criteres.motCle) {
+      const motCle = criteres.motCle.toLowerCase();
+      if (!e.nom.toLowerCase().includes(motCle) && !e.prenom.toLowerCase().includes(motCle)) {
+        return false;
+      }
+    }
+    return true;
+  });
+
 }
 
 function trierEmployes(employes, champ, ordre) {
-  // TODO
+ 
 }
 
 function paginer(employes, page, parPage) {
-  // TODO
+  const total = employes.length;
+  const totalPages = Math.ceil(total / parPage);
+  const debut = (page - 1) * parPage;
+  const donnees = employes.slice(debut, debut + parPage);
+  
+  return {
+    donnees,
+    page,
+    parPage,
+    total,
+    totalPages
+  };
 }
 
 function statistiquesParDepartement(employes) {
-  // TODO
+  const stats = {};
+  
+  employes.forEach(e => {
+    if (!stats[e.departement]) {
+      stats[e.departement] = {
+        departement: e.departement,
+        effectif: 0,
+        salaires: [],
+        masseSalariale: 0
+      };
+    }
+    stats[e.departement].effectif++;
+    stats[e.departement].salaires.push(e.salaire);
+    stats[e.departement].masseSalariale += e.salaire;
+  });
+  
+  const resultat = Object.values(stats).map(dept => ({
+    departement: dept.departement,
+    effectif: dept.effectif,
+    salaireMoyen: Math.round(dept.masseSalariale / dept.effectif),
+    salaireMin: Math.min(...dept.salaires),
+    salaireMax: Math.max(...dept.salaires),
+    masseSalariale: dept.masseSalariale
+  }));
+  
+  return resultat.sort((a, b) => b.effectif - a.effectif);
 }
 
 // Tests

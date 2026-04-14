@@ -114,7 +114,11 @@ function evolutionMensuelle(transactions) {
 }
 
 function detecterAnomalies(transactions) {
-  // TODO
+  const total = transactions.reduce((sum, t) => sum + t.montant, 0);
+  const moyenne = total / transactions.length;
+  const seuil = moyenne * 2.5;            
+  return transactions.filter(t => t.montant > seuil);
+  
 }
 
 // Tests
